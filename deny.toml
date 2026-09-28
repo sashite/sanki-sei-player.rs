@@ -1,0 +1,9 @@
+# cargo-deny configuration for sashite-sanki-sei-player.
+[licenses]
+allow = ["Apache-2.0", "MIT", "Unicode-3.0", "BSD-3-Clause", "Zlib", "MPL-2.0"]
+
+[bans]
+multiple-versions = "warn"
+
+[advisories]
+yanked = "deny"

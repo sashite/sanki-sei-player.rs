@@ -1,0 +1,42 @@
+[package]
+name = "sashite-sanki-sei-player"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+license = "Apache-2.0"
+description = "A Sashité Engine Interface (SEI) engine for Sanki that thinks: the reference search of sashite-sanki-player under SEI's clock — the sparring partner."
+repository = "https://github.com/sashite/sanki-sei-player.rs"
+homepage = "https://sashite.com/"
+readme = "README.md"
+keywords = ["chess", "ogi", "xiongqi", "sei", "engine"]
+categories = ["games", "command-line-utilities"]
+
+[[bin]]
+name = "sanki-sei-player"
+path = "src/main.rs"
+
+[dependencies]
+# The rules (legal moves, apply, terminal classification) and the canonical
+# PMN of every move (`pmn`), as *SEI Rules Document — Sanki* fixes it.
+sashite-sanki-engine = "0.12"
+# The brain (ADR-0015): iterative-deepening alpha-beta, anytime, pure — the
+# clock lives here, behind its `should_stop` hook.
+sashite-sanki-player = "0.6"
+serde        = { version = "1", features = ["derive"] }
+serde_json   = "1"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+indexing_slicing = "deny"
+arithmetic_side_effects = "deny"
+
+# The brain searches; unoptimized, it is twenty times slower, and the tests
+# play whole games through it. Its optimization does not touch this crate's
+# own debug build.
+[profile.dev.package."*"]
+opt-level = 3
